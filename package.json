@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
-    "@mdi/js": "^7.4.12",
+    "@mdi/js": "",
     "@mdi/react": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.6",
     "@testing-library/react": "^13.4.1",
