@@ -6,7 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@mdi/js": "",
-    "@mdi/react": "^1.9.1",
+    "@mdi/react": "",
     "@testing-library/jest-dom": "^5.16.6",
     "@testing-library/react": "^13.4.1",
     "@testing-library/user-event": "^13.5.1",
