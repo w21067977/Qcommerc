@@ -13,7 +13,7 @@
     "qrcode.react": "",
     "react": "",
     "react-dom": "",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.14.2",
     "react-scripts": "",
     "solc": "^0.8.11",
     "web-vitals": "",
