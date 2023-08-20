@@ -78,8 +78,7 @@ const PaymentForm = ({ open, onClose, onConfirm}) => {
   );
 };
 
-export default PaymentForm;
-
+export default PaymentForm;                 
 
 
 

@@ -1,5 +1,4 @@
 {
-  "homepage": "https://w21067977.github.io/Qcommerce",
   "name": "qrcommerce",
   "version": "0.1.0",
   "private": true,
@@ -16,8 +15,19 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "solc": "^0.8.21",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "web3": "^4.1.0"
   },
+  "resolutions": {
+    "@babel/core": "7.19.6",
+    "@babel/generator": "7.19.6",
+    "@babel/compat-data": "7.19.4",
+    "@babel/helper-compilation-targets": "7.19.3",
+    "@babel/helper-create-class-features-plugin": "7.19.0",
+    "@babel/helper-module-transforms": "7.19.6",
+    "babel-loader": "8.2.5"
+  },
+  
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
@@ -48,4 +58,3 @@
     "gh-pages": "^6.0.0"
   }
 }
-
