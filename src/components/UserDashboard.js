@@ -3,11 +3,10 @@ import { Button, IconButton } from '@material-ui/core';
 import { mdiLogout } from '@mdi/js';
 import Icon from '@mdi/react';
 import QRCodeGenerator from './QRCodeGenerator';
-import Web3 from 'web3';
 import PaymentContractABI from './PaymentContractABI.json'; // Import the ABI of the deployed smart contract
 import PaymentForm from './PaymentForm';
 
-const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545'); // Use local provider if available, otherwise use Ganache or another local provider
+
 
 const handleLogout = () => {
   alert('Logout successful');
@@ -76,33 +75,6 @@ const BusinessUserDashboard = ({ user }) => {
 const CustomerUserDashboard = ({ user, qrCodeData, onUpdateQRCode }) => {
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
   const [generatedQRCodeData, setGeneratedQRCodeData] = useState('');
-
-  const handlePayUsingEth = async () => {
-    try {
-      const accounts = await web3.eth.getAccounts();
-      const contractAddress = '0xE7fF5D7227f4Eb5b7E261c961892bE00dB0A2D99';
-      const paymentContract = new web3.eth.Contract(PaymentContractABI, contractAddress);
-
-      // Send the payment to the smart contract
-      await paymentContract.methods.pay().send({
-        from: accounts[0],
-        value: web3.utils.toWei('100', 'ether'), // Replace '100' with the actual payment amount
-      });
-
-      // Update the QR code data with the new payment information
-      const qrCodeData = `QR code data for customer - Amount: 100`; // Replace '100' with the actual payment amount
-      setGeneratedQRCodeData(qrCodeData);
-      onUpdateQRCode(qrCodeData);
-
-      // Show the payment success message
-      setPaymentSuccessful(true);
-
-      // You may want to update other states or perform additional actions after successful payment
-      // For example, update user data, etc.
-    } catch (error) {
-      console.error('Payment failed:', error);
-    }
-  };
 
   useEffect(() => {
     // Set a timer to hide the payment success message after 3 seconds
