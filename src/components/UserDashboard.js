@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@material-ui/core';
 import { mdiLogout } from '@mdi/js';
 import Icon from '@mdi/react';
 import QRCodeGenerator from './QRCodeGenerator';
@@ -49,6 +48,17 @@ const styles = {
     color: 'green',
     marginTop: '10px',
   },
+  customButton: {
+    padding: '10px 20px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
 };
 
 const handleLogout = () => {
@@ -73,6 +83,7 @@ const BusinessUserDashboard = ({ user }) => {
     setIsModalOpen(false);
   };
 
+
   return (
     <div style={styles.dashboardContainer}>
       <button
@@ -87,21 +98,19 @@ const BusinessUserDashboard = ({ user }) => {
       </p>
       <div style={styles.actionContainer}>
         <p>This is the dashboard for business users.</p>
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          style={styles.paymentButton}
+        <button
+          style={styles.customButton}
           onClick={handlePayNow}
         >
           Pay Now
-        </Button>
+        </button>
         {qrCodeData && <QRCodeGenerator data={qrCodeData} size={200} />}
         <PaymentForm open={isModalOpen} onClose={handleCloseModal} onConfirm={handlePayment} />
       </div>
     </div>
   );
 };
+
 
 const CustomerUserDashboard = ({ user, qrCodeData, onUpdateQRCode }) => {
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
@@ -157,20 +166,17 @@ const CustomerUserDashboard = ({ user, qrCodeData, onUpdateQRCode }) => {
       </p>
       <div style={styles.actionContainer}>
         <p>This is the dashboard for customer users.</p>
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          style={styles.paymentButton}
+        <button
+          style={styles.customButton}
           onClick={handlePayUsingEth}
         >
           Pay using ETH
-        </Button>
+        </button>
         {qrCodeData && <QRCodeGenerator data={generatedQRCodeData || qrCodeData} size={200} />}
         {paymentSuccessful && <p style={styles.successMessage}>Payment successful!</p>}
       </div>
-    </div>
-  );
+    </div>
+  );
 };
 
 const UserDashboard = ({ user }) => {
