@@ -1,15 +1,17 @@
+// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom'; // Import Route and Routes from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/MainPage';
 import BusinessUserRegistration from './components/BusinessUserRegistration';
 import CustomerUserRegistration from './components/CustomerUserRegistration';
 import Login from './components/Login';
 import { BusinessUserDashboard, CustomerUserDashboard } from './components/UserDashboard'; // Update the import
 
+
 const App = () => {
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/business-registration" element={<BusinessUserRegistration />} />
         <Route path="/customer-registration" element={<CustomerUserRegistration />} />
@@ -18,14 +20,12 @@ const App = () => {
         <Route path="/user-dashboard/business" element={<BusinessUserDashboard user={{ name: 'q' }} />} />
         {/* Render the CustomerUserDashboard component for customer users */}
         <Route path="/user-dashboard/customer" element={<CustomerUserDashboard user={{ name: 'q' }} />} />
-      </Switch >
+      </Routes>
     </Router>
   );
 };
 
 export default App;
-
-
 
 
 

@@ -1,13 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { IconButton, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { mdiLogout } from '@mdi/js';
 import Icon from '@mdi/react';
 import QRCodeGenerator from './QRCodeGenerator';
 import Web3 from 'web3';
-import PaymentContractABI from './PaymentContractABI.json'; // Import the ABI of the deployed smart contract
+import PaymentContractABI from './PaymentContractABI.json';
 import PaymentForm from './PaymentForm';
 
-const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545'); // Use local provider if available, otherwise use Ganache or another local provider
+const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
+
+const styles = {
+  dashboardContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: '0px',
+    position: 'relative',
+    background: '#b3e0ff',
+    minHeight: '110vh',
+    color: 'black',
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  title: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
+  welcomeMessage: {
+    fontSize: '18px',
+    marginBottom: '20px',
+  },
+  actionContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    marginTop: '20px',
+  },
+  paymentButton: {
+    marginBottom: '10px',
+  },
+  successMessage: {
+    color: 'green',
+    marginTop: '10px',
+  },
+};
 
 const handleLogout = () => {
   alert('Logout successful');
@@ -27,51 +69,39 @@ const BusinessUserDashboard = ({ user }) => {
   };
 
   const handlePayment = (amount) => {
-    // Implement your payment logic here using Web3 or other payment methods
-    // For demonstration purposes, we'll just set a static QR code data for business users
     setQrCodeData(`QR code data for business - Amount: ${amount}`);
     setIsModalOpen(false);
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        marginTop: '0px',
-        position: 'relative',
-        background: '#b3e0ff', // Light blue background for business user dashboard
-        minHeight: '110vh',
-        color: 'black', // Set text color to black for better visibility
-      }}
-    >
-      <IconButton
-        edge="start"
-        color="inherit"
+    <div style={styles.dashboardContainer}>
+      <button
         onClick={handleLogout}
-        style={{ position: 'absolute', top: 0, right: 0 }}
+        style={styles.logoutButton}
       >
-        <Icon path={mdiLogout} size={1} color="Red" /> {/* Set logout icon color to black */}
-      </IconButton>
-      <h2>Business User Dashboard</h2>
-      <p>
+        <Icon path={mdiLogout} size={1} color="red" />
+      </button>
+      <h2 style={styles.title}>Business User Dashboard</h2>
+      <p style={styles.welcomeMessage}>
         Welcome, {user.name} <span role="img" aria-label="Waving Hand">👋</span>
       </p>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '20px' }}>
+      <div style={styles.actionContainer}>
         <p>This is the dashboard for business users.</p>
-        <Button variant="contained" size="large" color="primary" onClick={handlePayNow}>
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          style={styles.paymentButton}
+          onClick={handlePayNow}
+        >
           Pay Now
         </Button>
         {qrCodeData && <QRCodeGenerator data={qrCodeData} size={200} />}
-        {/* Render the PaymentForm */}
         <PaymentForm open={isModalOpen} onClose={handleCloseModal} onConfirm={handlePayment} />
       </div>
     </div>
   );
 };
-
 
 const CustomerUserDashboard = ({ user, qrCodeData, onUpdateQRCode }) => {
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
@@ -105,56 +135,43 @@ const CustomerUserDashboard = ({ user, qrCodeData, onUpdateQRCode }) => {
   };
 
   useEffect(() => {
-    // Set a timer to hide the payment success message after 3 seconds
     if (paymentSuccessful) {
       const timer = setTimeout(() => {
         setPaymentSuccessful(false);
       }, 3000);
-
-      // Clean up the timer on component unmount to avoid memory leaks
       return () => clearTimeout(timer);
     }
   }, [paymentSuccessful]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        marginTop: '0px',
-        position: 'relative',
-        background: '#ffe6cc', // Light orange background for customer user dashboard
-        minHeight: '110vh',
-        color: 'black', // Set text color to black for better visibility
-      }}
-    >
-      <IconButton
-        edge="start"
-        color="inherit"
+    <div style={styles.dashboardContainer}>
+      <button
         onClick={handleLogout}
-        style={{ position: 'absolute', top: 0, right: 0 }}
+        style={styles.logoutButton}
       >
-        <Icon path={mdiLogout} size={1} color="black" /> {/* Set logout icon color to black */}
-      </IconButton>
-      <h2>Customer User Dashboard</h2>
-      <p>
+        <Icon path={mdiLogout} size={1} color="black" />
+      </button>
+      <h2 style={styles.title}>Customer User Dashboard</h2>
+      <p style={styles.welcomeMessage}>
         Welcome, {user.name} <span role="img" aria-label="Waving Hand">👋</span>
       </p>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '20px' }}>
+      <div style={styles.actionContainer}>
         <p>This is the dashboard for customer users.</p>
-        <Button variant="contained" size="large" color="primary" onClick={handlePayUsingEth}>
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          style={styles.paymentButton}
+          onClick={handlePayUsingEth}
+        >
           Pay using ETH
         </Button>
         {qrCodeData && <QRCodeGenerator data={generatedQRCodeData || qrCodeData} size={200} />}
-        {paymentSuccessful && <p>Payment successful!</p>}
+        {paymentSuccessful && <p style={styles.successMessage}>Payment successful!</p>}
       </div>
     </div>
   );
 };
-
-
 
 const UserDashboard = ({ user }) => {
   const [qrCodeData, setQrCodeData] = useState('');
@@ -174,5 +191,5 @@ const UserDashboard = ({ user }) => {
   );
 };
 
-export default UserDashboard;
+export default UserDashboard;
 export { BusinessUserDashboard, CustomerUserDashboard };

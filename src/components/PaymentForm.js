@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import QRCodeGenerator from './QRCodeGenerator';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@material-ui/core';
+import './static/PaymentForm.css'; // Import your custom CSS
 
-const PaymentForm = ({ open, onClose, onConfirm}) => {
+const PaymentForm = ({ open, onClose, onConfirm }) => {
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [paymentAmount, setPaymentAmount] = useState(0);
@@ -32,53 +32,43 @@ const PaymentForm = ({ open, onClose, onConfirm}) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Payment Options</DialogTitle>
-      <DialogContent>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className={`dialog-wrapper ${open ? 'open' : ''}`}>
+      <div className="dialog">
+        <h2>Payment Options</h2>
+        <div className="qr-code">
           {/* The "Pay using ETH" button is removed */}
           <QRCodeGenerator data={`QR code data for business - Amount: ${paymentAmount}`} size={200} />
         </div>
-        <TextField
-          label="Customer Name"
-          variant="outlined"
+        <input
+          type="text"
+          placeholder="Customer Name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
-          fullWidth
-          margin="normal"
         />
-        <TextField
-          label="Customer Email"
-          variant="outlined"
+        <input
           type="email"
+          placeholder="Customer Email"
           value={customerEmail}
           onChange={(e) => setCustomerEmail(e.target.value)}
-          fullWidth
-          margin="normal"
         />
-        <TextField
-          label="Payment Amount ($)"
-          variant="outlined"
+        <input
           type="number"
+          placeholder="Payment Amount ($)"
           value={paymentAmount}
           onChange={(e) => setPaymentAmount(e.target.value)}
-          fullWidth
-          margin="normal"
         />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleConfirm} color="primary">
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
+        <div className="buttons">
+          <button onClick={onClose}>Cancel</button>
+          <button onClick={handleConfirm}>Confirm</button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default PaymentForm;                 
+export default PaymentForm;
+
+
 
 
 
